@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Dashboard - Scan4Swachhta</title>
+  <link rel="stylesheet" href="css/citizendashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/qrcode.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="logo-left">
+      <img src="img/scan (2).png" alt="Logo" />
+    </div>
+    <h1 id="welcome">Welcome, User</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>
+
+  <nav class="dashboard-nav">
+    <button onclick="showSection('profile')">Profile</button>
+    <button onclick="showSection('sortinfo')">Sorting Info</button>
+    <button onclick="showSection('leaderboard')">Leaderboard</button>
+    <button onclick="showSection('rewards')">Rewards</button>
+  </nav>
+
+  <main class="dashboard-container">
+    <section id="profile" class="section">
+      <h2>Profile</h2>
+      <p id="usernameDisplay">Name: </p>
+      <p>Total Points: 500</p>
+      <p>Today's Score: 50 (updated at 8PM)</p>
+      <div id="qrcode"></div>
+      <button onclick="generateQR('User: ' + localStorage.getItem('username'))">
+        Generate QR for Dustbin
+      </button>
+    </section>
+
+    <section id="sortinfo" class="section hidden">
+      <h2>Sorting Information</h2>
+      <div class="info-box">
+        <strong>Wet Waste</strong><br>
+        Includes food scraps, fruits, and vegetable peels. Should be composted or processed into biogas.
+      </div>
+      <div class="info-box">
+        <strong>Dry Waste</strong><br>
+        Consists of plastics, paper, metal, and other recyclables. Should be kept clean and dry.
+      </div>
+      <div class="info-box">
+        <strong>Hazardous Waste</strong><br>
+        Includes batteries, glass, chemicals, and medical waste. Needs special handling and disposal.
+      </div>
+    </section>
+
+    <section id="leaderboard" class="section hidden">
+      <h2>Leaderboard</h2>
+      <div class="chart-section">
+        <div class="chart-box">
+          <h3>Points by Area</h3>
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>Waste Segregation</h3>
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+      <ul class="leaderboard-list">
+        <li><strong>UserA</strong> - 1000 pts</li>
+        <li><strong>UserB</strong> - 950 pts</li>
+        <li><strong>UserC</strong> - 900 pts</li>
+      </ul>
+    </section>
+
+    <section id="rewards" class="section hidden">
+      <h2>Rewards</h2>
+      <p>Congrats! You have earned a ₹50 Coupon.</p>
+    </section>
+  </main>
+
+  <script src="js/citizendashboard.js"></script>
+</body>
+</html>

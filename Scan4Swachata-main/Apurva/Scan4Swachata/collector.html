@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Garbage Collector Portal</title>
+    <link rel="stylesheet" href="css/collector.css">
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/collector.js" defer></script>
+</head>
+<body>
+
+<h1>Garbage Collector Portal</h1>
+
+<div id="loginSection">
+    <h2>Login</h2>
+    <input type="text" id="collectorId" placeholder="Collector ID">
+    <input type="password" id="collectorPass" placeholder="Password">
+    <button onclick="collectorLogin()">Login</button>
+</div>
+
+<div id="dashboard" style="display:none;">
+    <h2>Welcome, Collector</h2>
+
+    <button onclick="showHowToRate()">How to Rate</button>
+    <button onclick="startQRScan()">Scan QR</button>
+    <button onclick="logoutCollector()">Logout</button>
+
+    <div id="howToRate" style="display:none;">
+        <h3>Instructions</h3>
+        <p>Wet Waste: Food, Vegetables, Tea Bags</p>
+        <p>Dry Waste: Plastic, Paper, Metal</p>
+        <p>Rate segregation on scale of 1-10</p>
+        <button onclick="hideHowToRate()">Back</button>
+    </div>
+</div>
+
+<div id="rateSection" style="display:none;">
+    <h2>Rate Citizen: <span id="citizenName"></span></h2>
+    <input type="number" id="rating" min="1" max="10" placeholder="Rate 1 to 10">
+    <button onclick="connectWeighingMachine()">Connect Weighing Machine</button>
+    <button onclick="manualEntry()">Enter Weight Manually</button>
+</div>
+
+<div id="manualEntrySection" style="display:none;">
+    <h2>Manual Weight Entry</h2>
+    <input type="number" id="manualWeight" placeholder="Enter Weight (kg)">
+    <button onclick="submitData('manual')">Submit</button>
+</div>
+
+<div id="successSection" style="display:none;">
+    <h2>Data Submitted Successfully!</h2>
+    <button onclick="goToDashboard()">Go to Dashboard</button>
+</div>
+
+</body>
+</html>

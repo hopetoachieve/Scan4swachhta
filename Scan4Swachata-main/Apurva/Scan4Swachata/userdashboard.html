@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Scan4Swachata</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/qrcode.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome, Apurva</h1>
+        <nav>
+            <button onclick="showSection('profile')">Profile</button>
+            <button onclick="showSection('sortinfo')">Sorting Info</button>
+            <button onclick="showSection('leaderboard')">Leaderboard</button>
+            <button onclick="showSection('rewards')">Rewards</button>
+        </nav>
+    </header>
+
+    <section id="profile" class="section">
+        <h2>Profile</h2>
+        <p>Name: Apurva</p>
+        <p>Total Points: 500</p>
+        <p>Today's Score: 50 (updated at 8PM)</p>
+
+        <div id="qrcode"></div>
+
+        <button onclick="generateQR('User: Apurva')">Generate QR for Dustbin</button>
+        <button onclick="logout()">Logout</button>
+    </section>
+
+    <section id="sortinfo" class="section hidden">
+        <h2>Sorting Information</h2>
+        <ul>
+            <li>Wet Waste → Food, Fruits, Veggies</li>
+            <li>Dry Waste → Plastics, Paper, Metal</li>
+            <li>Hazardous Waste → Batteries, Glass, Chemicals</li>
+        </ul>
+    </section>
+
+    <section id="leaderboard" class="section hidden">
+        <h2>Leaderboard</h2>
+        <ul>
+            <li>UserA - 1000 pts</li>
+            <li>UserB - 950 pts</li>
+            <li>UserC - 900 pts</li>
+        </ul>
+    </section>
+
+    <section id="rewards" class="section hidden">
+        <h2>Rewards</h2>
+        <p>Congrats! You have earned a ₹50 Coupon.</p>
+    </section>
+
+<script>
+    function showSection(id) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => section.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    function generateQR(data) {
+        document.getElementById('qrcode').innerHTML = "";
+        new QRCode(document.getElementById("qrcode"), {
+            text: data,
+            width: 150,
+            height: 150
+        });
+    }
+
+    function logout() {
+        alert("Logged out successfully!");
+        window.location.href = "citizen.html";
+    }
+</script>
+
+</body>
+</html>
