@@ -1,4 +1,4 @@
-/* Citizen Login Styles */
+/* Citizen Registration Styles */
 :root {
   --primary: #2e7d32;
   --primary-dark: #1b5e20;
@@ -24,8 +24,43 @@ body {
   padding: 2rem;
   line-height: 1.6;
 }
-
 .login-container {
+background-color: var(--white);
+border-radius: 14px;
+box-shadow: 
+  0 4px 6px rgba(0, 0, 0, 0.03),
+  0 10px 15px rgba(0, 0, 0, 0.1);
+width: 100%;
+max-width: 480px;
+padding: 3rem;
+margin: 0 auto;
+position: relative;
+overflow: hidden;
+}
+
+.login-container::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 5px;
+background: linear-gradient(90deg, var(--primary), var(--primary-light));
+}
+
+.logo-container {
+text-align: center;
+margin-bottom: 2.5rem;
+}
+
+.logo-container h1 {
+color: var(--primary-dark);
+font-size: 2.1rem;
+font-weight: 700;
+margin-bottom: 0.25rem;
+}
+
+.register-container {
   background-color: var(--white);
   border-radius: 14px;
   box-shadow: 
@@ -39,7 +74,7 @@ body {
   overflow: hidden;
 }
 
-.login-container::before {
+.register-container::before {
   content: '';
   position: absolute;
   top: 0;
@@ -49,38 +84,21 @@ body {
   background: linear-gradient(90deg, var(--primary), var(--primary-light));
 }
 
-.logo-container {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.logo-container h1 {
+.register-container h2 {
   color: var(--primary-dark);
   font-size: 2.1rem;
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
-.tagline {
-  color: var(--dark-gray);
-  font-size: 1.05rem;
-  opacity: 0.9;
+#registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
-.login-form .form-group {
-  margin-bottom: 1.75rem;
-  position: relative;
-}
-
-.login-form label {
-  display: block;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-  color: var(--dark-gray);
-  font-size: 0.95rem;
-}
-
-.login-form input {
+#registerForm input {
   width: 100%;
   padding: 1.05rem 1.25rem;
   border: 1px solid var(--medium-gray);
@@ -91,11 +109,11 @@ body {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-.login-form input:hover {
+#registerForm input:hover {
   border-color: #adb5bd;
 }
 
-.login-form input:focus {
+#registerForm input:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 
@@ -103,7 +121,7 @@ body {
     inset 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-.submit-btn {
+#registerForm button {
   width: 100%;
   padding: 1.1rem;
   background-color: var(--primary);
@@ -117,7 +135,7 @@ body {
   margin-top: 0.75rem;
 }
 
-.submit-btn:hover {
+#registerForm button:hover {
   background-color: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 
@@ -125,35 +143,39 @@ body {
     0 6px 12px rgba(46, 125, 50, 0.1);
 }
 
-.error-message {
-  color: var(--error);
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
-  display: none;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.login-options {
+.register-container p {
   text-align: center;
   margin-top: 1.5rem;
   font-size: 0.95rem;
   color: var(--dark-gray);
 }
 
-.login-options a {
+.register-container a {
   color: var(--primary);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
+  position: relative;
 }
 
-.login-options a:hover {
+.register-container a:hover {
   color: var(--primary-dark);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+.register-container a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.register-container a:hover::after {
+  transform: scaleX(1);
 }
 
 @media (max-width: 576px) {
@@ -161,19 +183,19 @@ body {
     padding: 1.5rem;
   }
   
-  .login-container {
+  .register-container {
     padding: 2.25rem;
   }
   
-  .logo-container h1 {
+  .register-container h2 {
     font-size: 1.85rem;
   }
   
-  .login-form input {
+  #registerForm input {
     padding: 1rem 1.15rem;
   }
   
-  .submit-btn {
+  #registerForm button {
     padding: 1rem;
   }
 }
