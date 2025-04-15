@@ -1,0 +1,186 @@
+:root {
+    --primary: #2e7d32;
+    --primary-dark: #1b5e20;
+    --primary-light: #81c784;
+    --white: #ffffff;
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --dark-gray: #495057;
+    --text: #212529;
+    --error: #dc3545;
+    --success: #28a745;
+  }
+  
+  body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--light-gray);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.6;
+  }
+  
+  .register-container {
+    background-color: var(--white);
+    border-radius: 14px;
+    box-shadow: 
+      0 4px 6px rgba(0, 0, 0, 0.03),
+      0 10px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 3rem;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .register-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  }
+  
+  .logo-container {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .logo-container h2 {
+    color: var(--primary-dark);
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: var(--dark-gray);
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+  
+  #registerForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark-gray);
+    font-size: 0.95rem;
+  }
+  
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--white);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+  
+  .form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+  
+  .form-group input:hover, .form-group select:hover {
+    border-color: #adb5bd;
+  }
+  
+  .form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 
+      0 0 0 3px rgba(25, 118, 210, 0.15),
+      inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1rem;
+  }
+  
+  .submit-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 4px 8px rgba(25, 118, 210, 0.2),
+      0 6px 12px rgba(25, 118, 210, 0.1);
+  }
+  
+  .login-options {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    color: var(--dark-gray);
+  }
+  
+  .login-options a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+  
+  .login-options a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .register-container {
+      padding: 2rem;
+    }
+    
+    .logo-container h2 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    body {
+      padding: 1.5rem;
+    }
+    
+    .register-container {
+      padding: 1.5rem;
+    }
+    
+    .form-group input, .form-group select {
+      padding: 0.9rem 1.1rem;
+    }
+    
+    .submit-btn {
+      padding: 1rem;
+    }
+  }

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Municipal Login - Scan4Swachata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/municipallogin.css">
+</head>
+<body>
+  <div class="bg-overlay"></div>
+  
+  <div class="login-container">
+    <div class="logo-container">
+      <img src="img/scan (2).png" alt="Scan4Swachhta Logo" class="logo-icon">
+      <p class="tagline">Municipal Authority Portal</p>
+    </div>
+    
+    <form class="login-form" onsubmit="municipalLogin(event)">
+      <div class="form-group">
+        <label for="municipalEmail">Official Email</label>
+        <input type="email" id="municipalEmail" placeholder="Enter your official email">
+        <div class="error-message" id="email-error"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="municipalPass">Password</label>
+        <input type="password" id="municipalPass" placeholder="Enter your password">
+        <div class="error-message" id="pass-error"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="municipalRole">Designation</label>
+        <select id="municipalRole" class="role-select">
+          <option value="">Select your role</option>
+          <option value="admin">Administrator</option>
+          <option value="supervisor">Supervisor</option>
+          <option value="field_officer">Field Officer</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="submit-btn">Login</button>
+      
+      <div class="login-options">
+        Forgot password? <a href="municipalreset.html">Reset here</a><br>
+        New authority? <a href="municipalregister.html">Request access</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    async function municipalLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('municipalEmail').value;
+      const password = document.getElementById('municipalPass').value;
+      const role = document.getElementById('municipalRole').value;
+  
+      if(email.trim() === '' || password.trim() === '' || role === '') {
+        alert('Please fill in all fields');
+        return;
+      }
+  
+      try {
+        const response = await fetch('/api/municipal/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, role })
+        });
+  
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem('municipal_token', data.token);
+          localStorage.setItem('user_role', role);
+          window.location.href = 'municipaldashboard.html';
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        alert('Login failed. Please try again.');
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
