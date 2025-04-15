@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
     if (!collector || collector.password !== password) {
       return res.status(401).json({ error: 'Invalid ID or password' });
     }
-    res.json({ message: 'Login successful', collector });
+    res.json({ message: 'Login successful', collector,collectorId: collector.collectorId });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -84,41 +84,36 @@ router.get('/citizens', async (req, res) => {
 
 // Collector submits rating and weight for a citizen
 router.post('/manual-entry', async (req, res) => {
-  const { citizenObjectId, weight, qualityRating, collectorId } = req.body;
-
-  if (!citizenObjectId || !weight || !qualityRating || !collectorId) {
-    return res.status(400).json({ message: 'Missing fields' });
-  }
+  const { name, weight, rating, collectorId } = req.body;
 
   try {
-    const citizen = await Citizen.findById(citizenObjectId);
-    const collector = await Collector.findOne({ collectorId });
+    // Find citizen by name
+    const citizen = await Citizen.findOne({ name });
+    if (!citizen) {
+      return res.status(404).json({ message: 'Citizen not found' });
+    }
 
-    if (!citizen || !collector) {
-      return res.status(404).json({ message: 'Citizen or Collector not found' });
+    // Optional: Validate collector ID
+    const collector = await Collector.findOne({ collectorId });
+    if (!collector) {
+      return res.status(404).json({ message: 'Collector not found' });
     }
 
     // Add entry to citizen
     citizen.entries.push({
       weight,
-      qualityRating,
-      collectedBy: collector._id,
-      date: new Date()
+      qualityRating: rating,
+      collectedBy: collector._id
     });
+
     await citizen.save();
 
-    // Also store in collector's history if needed
-    collector.ratingsGiven.push({
-      rating: qualityRating,
-      date: new Date()
-    });
-    await collector.save();
-
-    res.json({ message: 'Entry recorded successfully' });
+    res.status(200).json({ message: 'Entry successfully recorded!' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error during manual entry' });
+    console.error('Error saving entry:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 module.exports = router; 

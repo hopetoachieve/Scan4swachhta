@@ -37,25 +37,25 @@
   <script>
     async function collectorLogin(event) {
       event.preventDefault();
-  
+
       const collectorId = document.getElementById('collectorId').value;
       const password = document.getElementById('collectorPass').value;
-  
+
       try {
         const res = await fetch('/api/collector/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ collectorId, password })
         });
-  
+
         const data = await res.json();
+
         if (res.ok) {
           localStorage.setItem('collectorId', collectorId);
-          window.location.href = 'collectordashboard.html';
           alert('Login successful');
           window.location.href = 'collectordashboard.html';
         } else {
-          alert(data.error);
+          alert(data.error || 'Login failed');
         }
       } catch (err) {
         console.error(err);

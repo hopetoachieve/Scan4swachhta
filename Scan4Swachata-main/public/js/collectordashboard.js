@@ -71,17 +71,34 @@ function showSection(sectionId) {
     }
   });
   
+  document.getElementById('manualEntryForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+  
+    const name = document.getElementById('citizenName').value.trim();
+    const weight = parseFloat(document.getElementById('weight').value);
+    const rating = parseInt(document.getElementById('rating').value);
+  
+    // Ideally, the collectorId is stored in localStorage after login
+    const collectorId = localStorage.getItem('collectorId');
+  
+    try {
+      const res = await fetch('/api/collector/manual-entry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, weight, rating, collectorId })
+      });
+  
+      const data = await res.json();
+      alert(data.message || 'Entry submitted!');
+    } catch (err) {
+      console.error('Submission error:', err);
+      alert('Something went wrong!');
+    }
+  });
   
 
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const collectorId = localStorage.getItem('collectorId');
-    if (!collectorId) {
-      window.location.href = 'collectorlogin.html';
-    } else {
-      document.getElementById('welcome').textContent = `Welcome, Collector ${collectorId}`;
-      loadDashboardData();
-      loadCitizens();
-    }
-  });
+ 
+
+  
   
