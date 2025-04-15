@@ -4,8 +4,6 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
-const citizenRoutes = require('./backend/routes/citizenRoutes');
-
 const app = express(); // ✅ This should come before app.use() or app.get()
 
 // Middleware
@@ -19,9 +17,13 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
+const citizenRoutes = require('./backend/routes/citizenRoutes');
 app.use('/api/citizen', citizenRoutes);
 const collectorRoutes = require('./backend/routes/collectorRoutes');
 app.use('/api/collector', collectorRoutes);
+const governmentRoutes = require('./backend/routes/government');
+app.use('/api/government', governmentRoutes);
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
