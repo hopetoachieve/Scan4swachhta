@@ -82,7 +82,7 @@ router.get('/citizens', async (req, res) => {
   }
 });
 
-// Collector submits rating and weight for a citizen
+/// Collector submits rating and weight for a citizen
 router.post('/manual-entry', async (req, res) => {
   const { name, weight, rating, collectorId } = req.body;
 
@@ -93,7 +93,7 @@ router.post('/manual-entry', async (req, res) => {
       return res.status(404).json({ message: 'Citizen not found' });
     }
 
-    // Optional: Validate collector ID
+    // Validate collector
     const collector = await Collector.findOne({ collectorId });
     if (!collector) {
       return res.status(404).json({ message: 'Collector not found' });
@@ -105,8 +105,11 @@ router.post('/manual-entry', async (req, res) => {
       qualityRating: rating,
       collectedBy: collector._id
     });
-
     await citizen.save();
+
+    // Add rating to collector's record
+    collector.ratingsGiven.push({ rating });
+    await collector.save();
 
     res.status(200).json({ message: 'Entry successfully recorded!' });
   } catch (err) {

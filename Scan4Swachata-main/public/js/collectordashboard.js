@@ -53,12 +53,17 @@ function showSection(sectionId) {
   });
   async function loadDashboardData() {
     const collectorId = localStorage.getItem('collectorId');
-    const res = await fetch(`/collector/dashboard/${collectorId}`);
+    const res = await fetch(`/api/collector/dashboard/${collectorId}`);
+    if (!res.ok) {
+      throw new Error(`Failed to load dashboard data: ${res.status}`);
+    }
+    
     const data = await res.json();
   
-    document.querySelector('#dashboard p:nth-child(2)').textContent = `Today's Collections: ${data.todaysCollections}`;
-    document.querySelector('#dashboard p:nth-child(3)').textContent = `Total Rated: ${data.totalRated} households`;
-    document.querySelector('#dashboard p:nth-child(4)').textContent = `Average Rating Given: ${data.avgRating}/10`;
+    document.getElementById('todaysCollections').textContent = `Today's Collections: ${data.todaysCollections}`;
+    document.getElementById('totalRated').textContent = `Total Rated: ${data.totalRated} households`;
+    document.getElementById('avgRating').textContent = `Average Rating Given: ${data.avgRating}/10`;
+
   }
   
   document.addEventListener('DOMContentLoaded', function() {

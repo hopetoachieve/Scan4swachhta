@@ -25,9 +25,10 @@
   <main class="dashboard-container">
     <section id="dashboard" class="section">
       <h2>Collector Dashboard</h2>
-      <p>Today's Collections: 15</p>
-      <p>Total Rated: 12 households</p>
-      <p>Average Rating Given: 8.2/10</p>
+      <p id="todaysCollections">Today's Collections: ...</p>
+      <p id="totalRated">Total Rated: ...</p>
+      <p id="avgRating">Average Rating Given: ...</p>
+
     </section>
 
     <section id="scan" class="section hidden">
@@ -52,19 +53,63 @@
 
     <section id="instructions" class="section hidden">
       <h2>Waste Segregation Instructions</h2>
+      
       <div class="info-box">
-        <strong>Wet Waste</strong><br>
-        Food scraps, vegetables, tea bags, fruit peels.
+          <strong>Wet Waste</strong><br>
+          Food scraps, vegetables, tea bags, fruit peels. 
+          <ul>
+              <li>Store in a compost bin or biodegradable bag.</li>
+              <li>Avoid mixing with dry waste to ensure proper composting.</li>
+          </ul>
       </div>
+      
       <div class="info-box">
-        <strong>Dry Waste</strong><br>
-        Plastic, paper, metal, glass - keep clean and dry.
+          <strong>Dry Waste</strong><br>
+          Plastic, paper, metal, glass - keep clean and dry.
+          <ul>
+              <li>Rinse containers before disposal to avoid contamination.</li>
+              <li>Flatten cardboard boxes to save space in recycling bins.</li>
+          </ul>
       </div>
+      
       <div class="info-box">
-        <strong>Rating Guidelines</strong><br>
-        10 = Perfect segregation, 1 = Mixed waste
+          <strong>Hazardous Waste</strong><br>
+          Batteries, electronics, chemicals - do not dispose of in regular waste.
+          <ul>
+              <li>Check local guidelines for hazardous waste disposal.</li>
+              <li>Use designated drop-off locations for safe disposal.</li>
+          </ul>
       </div>
-    </section>
+      
+      <div class="info-box">
+          <strong>Composting Tips</strong><br>
+          Composting is a great way to recycle wet waste.
+          <ul>
+              <li>Balance green materials (nitrogen-rich) with brown materials (carbon-rich).</li>
+              <li>Turn the compost pile regularly to aerate and speed up decomposition.</li>
+          </ul>
+      </div>
+      
+      <div class="info-box">
+          <strong>Rating Guidelines</strong><br>
+          10 = Perfect segregation, 1 = Mixed waste
+          <ul>
+              <li>Consider the cleanliness and separation of waste types.</li>
+              <li>Provide feedback on the quality of segregation to improve practices.</li>
+          </ul>
+      </div>
+      
+     
+      
+      <div class="info-box">
+          <strong>Additional Resources</strong><br>
+          <ul>
+              <li><a href="https://greensutra.in/waste-segregation-all-you-need-to-know/" target="_blank">Comprehensive Waste Segregation Guide</a></li>
+              <li><a href="https://www.detsi.qld.gov.au/our-department/news-media/down-to-earth/how-to-compost-effectively" target="_blank">Tips for Effective Composting</a></li>
+              <li><a href="https://www.recyclenow.com/recycling-locator" target="_blank">Find Recycling Locations Near You</a></li>
+          </ul>
+      </div>
+  </section>
   </main>
 
   <script src="js/collectordashboard.js"></script>
