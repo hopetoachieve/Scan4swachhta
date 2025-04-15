@@ -41,21 +41,18 @@
         <input type="text" id="municipalCity" placeholder="Enter your city/district">
       </div>
       
-      <div class="form-group">
-        <label for="municipalDesignation">Designation</label>
-        <select id="municipalDesignation">
-          <option value="">Select your designation</option>
-          <option value="admin">Administrator</option>
-          <option value="supervisor">Supervisor</option>
-          <option value="field_officer">Field Officer</option>
-        </select>
-      </div>
+     
       
       <div class="form-group">
         <label for="municipalId">Official ID Number</label>
         <input type="text" id="municipalId" placeholder="Enter your official ID">
       </div>
-      
+
+      <div class="form-group">
+        <label for="municipalPassword">Password</label>
+        <input type="password" id="municipalPassword" placeholder="Create a password">
+      </div>
+
       <button type="submit" class="submit-btn">Request Access</button>
     </form>
     
@@ -74,8 +71,8 @@
         phone: document.getElementById('municipalPhone').value,
         department: document.getElementById('municipalDepartment').value,
         city: document.getElementById('municipalCity').value,
-        designation: document.getElementById('municipalDesignation').value,
-        officialId: document.getElementById('municipalId').value
+        officialId: document.getElementById('municipalId').value,
+        password: document.getElementById('municipalPassword').value
       };
       
       // Basic validation
@@ -87,7 +84,7 @@
       }
       
       try {
-        const response = await fetch('/api/municipal/register', {
+        const response = await fetch('/api/government/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -102,8 +99,8 @@
           alert(data.message || 'Registration failed');
         }
       } catch (err) {
-        alert('An error occurred. Please try again.');
-        console.error(err);
+        alert(`An error occurred: ${err.message}`);
+          console.error('Full error:', err);
       }
     }
   </script>

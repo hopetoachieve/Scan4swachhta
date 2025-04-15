@@ -12,6 +12,10 @@ app.use(express.json());
 
 const citizenRoutes = require('./routes/citizenRoutes');
 app.use('/api/citizen', citizenRoutes);
+const collectorRoutes = require('./routes/collector');
+app.use('/api/collector', collectorRoutes);
+const governmentRoutes = require('./routes/government');
+app.use('/api/government', governmentRoutes);
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
