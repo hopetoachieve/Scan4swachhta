@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Citizen Registration - Scan4Swachata</title>
+  <link rel="stylesheet" href="css/citizen_register.css"/>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Register as a Citizen</h2>
+    <form id="registerForm" onsubmit="registerCitizen(event)">
+      <input type="text" id="citizenName" placeholder="Full Name" required />
+      <input type="email" id="citizenEmail" placeholder="Email" required />
+      <input type="password" id="citizenPass" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="citizenlogin.html">Login here</a></p>
+  </div>
+
+  <script>
+    async function registerCitizen(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('citizenName').value;
+      const email = document.getElementById('citizenEmail').value;
+      const password = document.getElementById('citizenPass').value;
+
+      if (!name || !email || !password) {
+        alert('All fields are required!');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/citizen/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('Registration successful! Please log in.');
+          window.location.href = 'citizenlogin.html';
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('An error occurred. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>
