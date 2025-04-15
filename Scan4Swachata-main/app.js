@@ -20,7 +20,8 @@ app.get('/', (req, res) => {
 
 // API Routes
 app.use('/api/citizen', citizenRoutes);
-
+const collectorRoutes = require('./backend/routes/collectorRoutes');
+app.use('/api/collector', collectorRoutes);
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
