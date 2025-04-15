@@ -25,10 +25,7 @@ const governmentRoutes = require('./backend/routes/government');
 app.use('/api/government', governmentRoutes);
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('✅ MongoDB Connected'))
 .catch((err) => console.log('❌ MongoDB Error:', err));
 
@@ -36,4 +33,9 @@ mongoose.connect(process.env.MONGO_URI, {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something broke!' });
 });

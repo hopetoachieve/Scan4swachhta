@@ -71,3 +71,17 @@ function showSection(sectionId) {
     }
   });
   
+  
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const collectorId = localStorage.getItem('collectorId');
+    if (!collectorId) {
+      window.location.href = 'collectorlogin.html';
+    } else {
+      document.getElementById('welcome').textContent = `Welcome, Collector ${collectorId}`;
+      loadDashboardData();
+      loadCitizens();
+    }
+  });
+  

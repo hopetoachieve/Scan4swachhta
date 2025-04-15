@@ -13,7 +13,18 @@ const citizenSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  phone: String,
+  address: String,
+  entries: [
+    {
+      weight: Number,
+      qualityRating: Number,
+      date: { type: Date, default: Date.now },
+      collectedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Collector' }
+    }
+  ]
 });
 
-module.exports = mongoose.model('Citizen', citizenSchema);
+module.exports = mongoose.models.Citizen || mongoose.model('Citizen', citizenSchema);
+

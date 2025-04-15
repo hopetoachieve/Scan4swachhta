@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Citizen = require('../models/citizen');
+const Citizen = require('../models/Citizen');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -43,5 +43,16 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+//Get all the citizens
+router.get('/all', async (req, res) => {
+  try {
+    const citizens = await Citizen.find({}, 'name _id'); // only name & ID
+    res.json(citizens);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching citizens' });
+  }
+});
+
 
 module.exports = router;

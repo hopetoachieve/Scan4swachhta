@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Collector = require('../models/Collector');
+const Citizen = require('../models/Citizen');
 
 // Register
 router.post('/register', async (req, res) => {
@@ -29,7 +30,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Get dashboard summary
-router.get('/collector/dashboard/:id', async (req, res) => {
+router.get('/dashboard/:id', async (req, res) => {
   try {
     const collector = await Collector.findOne({ collectorId: req.params.id });
     if (!collector) return res.status(404).json({ message: 'Collector not found' });
@@ -71,4 +72,53 @@ router.post('/collector/rating', async (req, res) => {
   }
 });
 
-module.exports = router;
+// Get list of all citizens (for dropdown)
+router.get('/citizens', async (req, res) => {
+  try {
+    const citizens = await Citizen.find({}, 'name address'); // Only send name and address
+    res.json(citizens);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch citizens' });
+  }
+});
+
+// Collector submits rating and weight for a citizen
+router.post('/manual-entry', async (req, res) => {
+  const { citizenObjectId, weight, qualityRating, collectorId } = req.body;
+
+  if (!citizenObjectId || !weight || !qualityRating || !collectorId) {
+    return res.status(400).json({ message: 'Missing fields' });
+  }
+
+  try {
+    const citizen = await Citizen.findById(citizenObjectId);
+    const collector = await Collector.findOne({ collectorId });
+
+    if (!citizen || !collector) {
+      return res.status(404).json({ message: 'Citizen or Collector not found' });
+    }
+
+    // Add entry to citizen
+    citizen.entries.push({
+      weight,
+      qualityRating,
+      collectedBy: collector._id,
+      date: new Date()
+    });
+    await citizen.save();
+
+    // Also store in collector's history if needed
+    collector.ratingsGiven.push({
+      rating: qualityRating,
+      date: new Date()
+    });
+    await collector.save();
+
+    res.json({ message: 'Entry recorded successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error during manual entry' });
+  }
+});
+
+module.exports = router; 
