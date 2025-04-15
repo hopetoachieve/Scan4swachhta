@@ -17,6 +17,9 @@ app.use('/api/collector', collectorRoutes);
 const governmentRoutes = require('./routes/government');
 app.use('/api/government', governmentRoutes);
 
+app.use(express.static('public'));
+app.use('/images', express.static('images'));
+
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,

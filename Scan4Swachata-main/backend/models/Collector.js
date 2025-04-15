@@ -11,7 +11,11 @@ const collectorSchema = new mongoose.Schema({
     required: true
   },
   name: String,
-  assignedArea: String
+  assignedArea: String,
+  ratingsGiven: [{
+    rating: Number,
+    date: { type: Date, default: Date.now }
+  }]
 });
 
 module.exports = mongoose.model('Collector', collectorSchema);
