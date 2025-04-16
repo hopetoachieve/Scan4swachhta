@@ -57,7 +57,7 @@ function showSection(sectionId) {
     if (!res.ok) {
       throw new Error(`Failed to load dashboard data: ${res.status}`);
     }
-    
+     
     const data = await res.json();
   
     document.getElementById('todaysCollections').textContent = `Today's Collections: ${data.todaysCollections}`;
