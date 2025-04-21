@@ -1,4 +1,3 @@
-// dashboard.js
 function showSection(id) {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => section.classList.add('hidden'));
@@ -19,7 +18,7 @@ function showSection(id) {
   function logout() {
     localStorage.clear();
     alert("Logged out successfully!");
-    window.location.href = "citizenregister.html";
+    window.location.href = "citizenlogin.html";
   }
   
 
@@ -135,6 +134,25 @@ async function fetchLeaderboard() {
 
 
 window.onload = async function () {
+
+// Push a new state to history so there's something to go "back" to
+history.pushState(null, null, location.href);
+
+// Now listen for back/forward navigation
+window.addEventListener('popstate', function (event) {
+  // Push user back forward again
+  history.pushState(null, null, location.href);
+
+  // Show SweetAlert popup
+  Swal.fire({
+    icon: 'warning',
+    title: 'Logout First!',
+    text: 'You need to log out before leaving the dashboard.',
+    confirmButtonText: 'Okay',
+    confirmButtonColor: '#3085d6'
+  });
+});
+  // Set the welcome message
   const user = localStorage.getItem("username") || "User ";
   document.getElementById("welcome").textContent = "Welcome, " + user;
 

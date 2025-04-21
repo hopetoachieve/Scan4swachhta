@@ -54,14 +54,22 @@
       </div>
 
       <button type="submit" class="submit-btn">Request Access</button>
+      <div class="login-options">
+        Already have access? <a href="municipallogin.html">Login here</a>
+      </div>
+      <div class="home-link">
+        <a href="index.html" onclick="goHome()">Go to Home</a>
+      </div>
     </form>
     
-    <div class="login-options">
-      Already have access? <a href="municipallogin.html">Login here</a>
-    </div>
+   
+    
   </div>
 
   <script>
+    function goHome() {
+      window.location.href = 'index.html';
+    }
     async function registerMunicipal(event) {
       event.preventDefault();
       

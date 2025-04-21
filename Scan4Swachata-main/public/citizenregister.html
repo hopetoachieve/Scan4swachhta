@@ -25,10 +25,18 @@
     <!-- Already registered link -->
     <p class="login-redirect">
       Already registered? <a href="citizenlogin.html">Sign in here</a>
+
     </p>
+    <div class="home-link">
+      <a href="index.html" onclick="goHome()">Go to Home</a>
+    </div>
   </div>
+ 
 
   <script>
+    function goHome() {
+      window.location.href = 'index.html';
+    }
     async function registerCitizen(event) {
       event.preventDefault();
 

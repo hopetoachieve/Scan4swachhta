@@ -101,6 +101,24 @@ function showSection(sectionId) {
     }
   });
   
+  window.onload = async function () {// Push a new state to history so there's something to go "back" to
+    history.pushState(null, null, location.href);
+    
+    // Now listen for back/forward navigation
+    window.addEventListener('popstate', function (event) {
+      // Push user back forward again
+      history.pushState(null, null, location.href);
+    
+      // Show SweetAlert popup
+      Swal.fire({
+        icon: 'warning',
+        title: 'Logout First!',
+        text: 'You need to log out before leaving the dashboard.',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: '#3085d6'
+      });
+    });
+  };
 
 
  

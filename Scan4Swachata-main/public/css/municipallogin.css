@@ -153,6 +153,26 @@
     color: var(--primary-dark);
     text-decoration: underline;
   }
+  .home-btn-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .home-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-btn:hover {
+    background-color: #0056b3;
+  }
   
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(5px); }
@@ -176,3 +196,5 @@
       padding: 1rem;
     }
   }
+  
+  

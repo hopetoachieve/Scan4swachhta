@@ -43,10 +43,17 @@
     <p class="login-redirect">
       Already registered? <a href="collectorlogin.html">Sign in here</a>
     </p>
+    <div class="home-link">
+      <a href="index.html" onclick="goHome()">Go to Home</a>
+    </div>
   </div>
+ 
   </div>
 
   <script>
+     function goHome() {
+    window.location.href = 'index.html';
+    }
     async function registerCollector(event) {
       event.preventDefault();
 

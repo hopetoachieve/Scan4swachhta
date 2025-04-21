@@ -68,7 +68,21 @@
       </ul>
     </section>
   </main>    
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    history.pushState(null, null, location.href);
+window.onpopstate = function () {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Hold up!',
+    text: 'Please logout first before leaving this page.',
+    confirmButtonText: 'Okay',
+    confirmButtonColor: '#3085d6'
+  });
+  history.go(1); // Block going back
+};
+  </script>
+  <script src="js/citizendashboard.js">
 
-  <script src="js/citizendashboard.js"></script>
+</script>
 </body>
 </html>
