@@ -71,3 +71,52 @@ function showSection(id) {
     });
   }
   
+  async function fetchCitizenData() {
+    const userId = localStorage.getItem("userId"); // Assuming you store userId in localStorage
+    if (!userId) {
+        console.error("User  ID not found in local storage.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/citizen/${userId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch citizen data');
+        }
+        const data = await response.json();
+
+        // Display the username from local storage
+        const username = localStorage.getItem("username") || "User ";
+        document.getElementById("usernameDisplay").innerHTML = `<div class='info-box'><strong>Name:</strong> ${username}</div>`;
+        
+        // Display total points and today's score
+        document.getElementById("totalPoints").textContent = `Total Points: ${data.totalPoints}`;
+        document.getElementById("todaysScore").textContent = `Today's Score: ${data.todaysScore}`;
+    } catch (error) {
+        console.error("Error fetching citizen data:", error);
+    }
+}
+
+
+async function fetchLeaderboard() {
+  const response = await fetch('/api/collector/leaderboard'); // Adjust the endpoint as necessary
+  const leaderboardData = await response.json();
+
+  const leaderboardList = document.querySelector('.leaderboard-list');
+  leaderboardList.innerHTML = ''; // Clear existing list
+
+  leaderboardData.forEach(user => {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `<strong>${user.name}</strong> - ${user.points} pts`;
+      leaderboardList.appendChild(listItem);
+  });
+}
+
+
+window.onload = async function () {
+  const user = localStorage.getItem("username") || "User ";
+  document.getElementById("welcome").textContent = "Welcome, " + user;
+
+  await fetchCitizenData();
+  await fetchLeaderboard();
+};

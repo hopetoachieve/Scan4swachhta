@@ -29,8 +29,8 @@
     <section id="profile" class="section">
       <h2>Profile</h2>
       <p id="usernameDisplay">Name: </p>
-      <p>Total Points: 500</p>
-      <p>Today's Score: 50 (updated at 8PM)</p>
+      <p id="totalPoints">Total Points: </p>
+      <p id="todaysScore">Today's Score: </p>
       <div id="qrcode"></div>
       <button onclick="generateQR('User: ' + localStorage.getItem('username'))">
         Generate QR for Dustbin

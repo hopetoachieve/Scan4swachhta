@@ -14,8 +14,7 @@ const citizenSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  phone: String,
-  address: String,
+ 
   entries: [
     {
       weight: Number,

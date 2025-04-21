@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
 
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => { 
   const { email, password } = req.body;
   
   try {
@@ -38,11 +38,19 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: citizen._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(200).json({ message: 'Login successful', token });
+    // ✅ Return name, token, and _id as userId
+    res.status(200).json({ 
+      message: 'Login successful', 
+      token, 
+      name: citizen.name, 
+      userId: citizen._id  // ✅ This is all you need
+    });
+    
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 //Get all the citizens
 router.get('/all', async (req, res) => {
@@ -53,6 +61,40 @@ router.get('/all', async (req, res) => {
     res.status(500).json({ message: 'Error fetching citizens' });
   }
 });
+
+// Get citizen by ID
+// Assuming you already required Citizen model
+router.get('/:id', async (req, res) => {
+  try {
+    const citizen = await Citizen.findById(req.params.id);
+
+    if (!citizen) {
+      return res.status(404).json({ message: 'Citizen not found' });
+    }
+
+    // Calculate totalPoints
+    const totalPoints = citizen.entries.reduce((sum, entry) => {
+      return sum + (entry.weight * entry.qualityRating);
+    }, 0);
+
+    // Calculate today's score
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Start of today
+
+    const todaysScore = citizen.entries
+      .filter(entry => new Date(entry.date) >= today)
+      .reduce((sum, entry) => {
+        return sum + (entry.weight * entry.qualityRating);
+      }, 0);
+
+    res.json({ totalPoints, todaysScore });
+  } catch (error) {
+    console.error('Error fetching citizen data:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 
 module.exports = router;

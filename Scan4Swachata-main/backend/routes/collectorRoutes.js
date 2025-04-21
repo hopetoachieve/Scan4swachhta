@@ -117,6 +117,19 @@ router.post('/manual-entry', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
+// Get leaderboard
+router.get('/leaderboard', async (req, res) => {
+  try {
+      const collectors = await Collector.find().sort({ 'ratingsGiven.rating': -1 }).limit(10); // Adjust sorting as needed
+      const leaderboard = collectors.map(collector => ({
+          name: collector.name,
+          points: collector.ratingsGiven.reduce((sum, r) => sum + r.rating, 0) // Calculate total points
+      }));
+      res.json(leaderboard);
+  } catch (err) {
+      console.error('Error fetching leaderboard:', err);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
 
 module.exports = router; 
