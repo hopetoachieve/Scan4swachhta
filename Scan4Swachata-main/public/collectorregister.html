@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Collector Registration - Scan4Swachata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/collectorlogin.css" />
+</head>
+<body>
+  <div class="bg-overlay"></div>
+
+  <div class="login-container">
+    <div class="logo-container">
+      <img src="img/scan (2).png" alt="Scan4Swachhta Logo" class="logo-icon" />
+      <p class="tagline">Collector Registration Portal</p>
+    </div>
+
+    <form class="login-form" onsubmit="registerCollector(event)">
+      <div class="form-group">
+        <label for="collectorId">Collector ID</label>
+        <input type="text" id="collectorId" placeholder="Enter unique ID" required />
+      </div>
+
+      <div class="form-group">
+        <label for="collectorPass">Password</label>
+        <input type="password" id="collectorPass" placeholder="Enter password" required />
+      </div>
+
+      <div class="form-group">
+        <label for="collectorName">Full Name</label>
+        <input type="text" id="collectorName" placeholder="Enter full name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="assignedArea">Assigned Area</label>
+        <input type="text" id="assignedArea" placeholder="Enter assigned area" required />
+      </div>
+
+      <button type="submit" class="submit-btn">Register</button>
+    </form>
+    <!-- Already registered link -->
+    <p class="login-redirect">
+      Already registered? <a href="collectorlogin.html">Sign in here</a>
+    </p>
+  </div>
+  </div>
+
+  <script>
+    async function registerCollector(event) {
+      event.preventDefault();
+
+      const collectorId = document.getElementById('collectorId').value;
+      const password = document.getElementById('collectorPass').value;
+      const name = document.getElementById('collectorName').value;
+      const assignedArea = document.getElementById('assignedArea').value;
+
+      try {
+        const res = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ collectorId, password, name, assignedArea })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Registration successful!');
+          window.location.href = 'collectorlogin.html';
+        } else {
+          alert(data.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('An error occurred during registration.');
+      }
+    }
+  </script>
+</body>
+</html>

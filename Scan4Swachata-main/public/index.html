@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan4Swachhta</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo-area">
+      <img src="img/scan (2).png" alt="Scan4Swachhta Logo" class="logo-icon-large">
+    </div>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="bi bi-circle-half"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main class="container" id="home">
+    <section class="hero">
+      <h1 class="hero-title">Welcome to Scan4Swachhta</h1>
+      <p class="hero-subtitle">Empowering cities through smart waste tracking and citizen engagement.</p>
+    </section>
+
+    <section class="buttons">
+      <a href="citizenregister.html" class="btn citizen">
+        <i class="bi bi-person-fill icon"></i>
+        <span>Citizen Portal</span>
+      </a>
+      <a href="collectorregister.html" class="btn collector">
+        <i class="bi bi-truck-front-fill icon"></i>
+        <span>Garbage Collector</span>
+      </a>
+      <a href="municipalregister.html" class="btn govt">
+        <i class="bi bi-bank icon"></i>
+        <span>Government Officer</span>
+      </a>
+    </section>
+
+    <section class="about" id="about">
+      <h2>About the Initiative</h2>
+      <p>
+        Helping cities become cleaner through smart waste tracking, QR code scanning, 
+        and rewarding citizens for proper waste segregation. Our mission is to create 
+        sustainable communities through technology.
+      </p>
+      <div class="features">
+        <div class="feature">
+          <i class="bi bi-recycle" style="font-size: 2rem; color: green;"></i>
+          <p>Waste Segregation</p>
+        </div>
+        <div class="feature">
+          <i class="bi bi-trophy-fill" style="font-size: 2rem; color: gold;"></i>
+          <p>Reward System</p>
+        </div>
+        <div class="feature">
+          <i class="bi bi-bar-chart-line-fill" style="font-size: 2rem; color: dodgerblue;"></i>
+          <p>Real-time Analytics</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Contact Us</h2>
+      <form class="feedback-form">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Feedback" rows="4" required></textarea>
+        <button type="submit">Send Feedback</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>Developed by YourName © <span id="year"></span></p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Municipal Registration - Scan4Swachata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/municipalregister.css">
+</head>
+<body>
+  <div class="register-container">
+    <div class="logo-container">
+      <img src="img/scan (2).png" alt="Scan4Swachhta Logo" class="logo-icon">
+      <h2>Municipal Authority Registration</h2>
+      <p class="subtitle">Request access to the municipal portal</p>
+    </div>
+    
+    <form id="registerForm" onsubmit="registerMunicipal(event)">
+      <div class="form-group">
+        <label for="municipalName">Full Name</label>
+        <input type="text" id="municipalName" placeholder="Enter your full name">
+      </div>
+      
+      <div class="form-group">
+        <label for="municipalEmail">Official Email</label>
+        <input type="email" id="municipalEmail" placeholder="Enter your official email">
+      </div>
+      
+      <div class="form-group">
+        <label for="municipalPhone">Phone Number</label>
+        <input type="tel" id="municipalPhone" placeholder="Enter your contact number">
+      </div>
+      
+      <div class="form-group">
+        <label for="municipalDepartment">Department</label>
+        <input type="text" id="municipalDepartment" placeholder="Enter your department">
+      </div>
+      
+      <div class="form-group">
+        <label for="municipalCity">City/District</label>
+        <input type="text" id="municipalCity" placeholder="Enter your city/district">
+      </div>
+      
+     
+      
+      <div class="form-group">
+        <label for="municipalId">Official ID Number</label>
+        <input type="text" id="municipalId" placeholder="Enter your official ID">
+      </div>
+
+      <div class="form-group">
+        <label for="municipalPassword">Password</label>
+        <input type="password" id="municipalPassword" placeholder="Create a password">
+      </div>
+
+      <button type="submit" class="submit-btn">Request Access</button>
+    </form>
+    
+    <div class="login-options">
+      Already have access? <a href="municipallogin.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    async function registerMunicipal(event) {
+      event.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('municipalName').value,
+        email: document.getElementById('municipalEmail').value,
+        phone: document.getElementById('municipalPhone').value,
+        department: document.getElementById('municipalDepartment').value,
+        city: document.getElementById('municipalCity').value,
+        officialId: document.getElementById('municipalId').value,
+        password: document.getElementById('municipalPassword').value
+      };
+      
+      // Basic validation
+      for (const key in formData) {
+        if (formData[key].trim() === '') {
+          alert('Please fill all fields');
+          return;
+        }
+      }
+      
+      try {
+        const response = await fetch('/api/government/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          alert('Registration request submitted! You will receive an email once approved.');
+          window.location.href = 'municipallogin.html';
+        } else {
+          alert(data.message || 'Registration failed');
+        }
+      } catch (err) {
+        alert(`An error occurred: ${err.message}`);
+          console.error('Full error:', err);
+      }
+    }
+  </script>
+</body>
+</html>
