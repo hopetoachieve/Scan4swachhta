@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Citizen = require('../models/Citizen');
+const Collector = require('../models/Collector');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -94,7 +95,55 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Route: GET /api/leaderboard/area-scores
+router.get('/leaderboard/area-scores', async (req, res) => {
+  try {
+    const collectors = await Collector.find();
+    
+    const areaScores = {};
 
+    collectors.forEach(collector => {
+      const totalRating = collector.ratingsGiven.reduce((acc, r) => acc + r.rating, 0);
+      if (!areaScores[collector.assignedArea]) {
+        areaScores[collector.assignedArea] = totalRating;
+      } else {
+        areaScores[collector.assignedArea] += totalRating;
+      }
+    });
+
+    res.json(areaScores);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Route: GET /api/leaderboard/top-citizens
+router.get('/leaderboard/top-citizens', async (req, res) => {
+  try {
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    const citizens = await Citizen.find();
+
+    const scores = citizens.map(citizen => {
+      const scoreThisMonth = citizen.entries
+        .filter(e => new Date(e.date) >= oneMonthAgo)
+        .reduce((acc, entry) => acc + entry.qualityRating, 0);
+
+      return {
+        name: citizen.name,
+        score: scoreThisMonth
+      };
+    });
+
+    const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 5);
+    res.json(sorted);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 
 module.exports = router;

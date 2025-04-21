@@ -22,10 +22,13 @@ function showSection(id) {
     window.location.href = "citizenregister.html";
   }
   
-  window.onload = function () {
-    const user = localStorage.getItem("username") || "User";
+
+  window.onload = async function () {
+    const user = localStorage.getItem("username") || "User ";
     document.getElementById("welcome").textContent = "Welcome, " + user;
     document.getElementById("usernameDisplay").innerHTML = `<div class='info-box'><strong>Name:</strong> ${user}</div>`;
+    await fetchCitizenData();
+    await fetchLeaderboard();
   };
   
   function renderCharts() {
@@ -50,25 +53,7 @@ function showSection(id) {
       }
     });
   
-    // Pie chart - Waste segregation breakdown
-    const pieCtx = document.getElementById('pieChart').getContext('2d');
-    new Chart(pieCtx, {
-      type: 'pie',
-      data: {
-        labels: ['Dry Waste', 'Wet Waste', 'Hazardous Waste'],
-        datasets: [{
-          label: 'Waste Segregation',
-          data: [50, 30, 20],
-          backgroundColor: ['#f4c430', '#28a745', '#dc3545']
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: { display: true, text: 'Waste Segregation' }
-        }
-      }
-    });
+   
   }
   
   async function fetchCitizenData() {
@@ -98,18 +83,54 @@ function showSection(id) {
 }
 
 
+async function fetchAreaScores() {
+  try {
+    const res = await fetch('/api/citizen/leaderboard/area-scores');
+    const data = await res.json();
+
+    const labels = Object.keys(data);
+    const scores = Object.values(data);
+
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Points',
+          data: scores,
+          backgroundColor: ['#28a745', '#56ab2f', '#a8e063']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Points by Area' }
+        }
+      }
+    });
+  } catch (error) {
+    console.error("Failed to load area scores:", error);
+  }
+}
+
 async function fetchLeaderboard() {
-  const response = await fetch('/api/collector/leaderboard'); // Adjust the endpoint as necessary
-  const leaderboardData = await response.json();
+  try {
+    const res = await fetch('/api/citizen/leaderboard/top-citizens');
+    const data = await res.json();
 
-  const leaderboardList = document.querySelector('.leaderboard-list');
-  leaderboardList.innerHTML = ''; // Clear existing list
+    const list = document.getElementById('leaderboardList');
+    list.innerHTML = ''; // Clear default list
 
-  leaderboardData.forEach(user => {
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `<strong>${user.name}</strong> - ${user.points} pts`;
-      leaderboardList.appendChild(listItem);
-  });
+    data.forEach(user => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${user.name}</strong> - ${user.score} pts`;
+      list.appendChild(li);
+    });
+  } catch (error) {
+    console.error("Failed to load leaderboard:", error);
+  }
 }
 
 
@@ -119,4 +140,5 @@ window.onload = async function () {
 
   await fetchCitizenData();
   await fetchLeaderboard();
+  await fetchAreaScores();
 };
