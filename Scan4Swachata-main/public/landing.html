@@ -12,7 +12,7 @@
       padding: 0;
       font-family: 'Poppins', sans-serif;
       height: 100vh;
-      background: linear-gradient(135deg, #a8e063, #56ab2f);
+      background: linear-gradient(135deg, #a8e063, #6dc544);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,9 +25,9 @@
       animation: fadeIn 1s ease-in-out;
     }
 
-    .logo {
-      font-size: 2.8rem;
-      font-weight: 600;
+    .logo img {
+      width: 200px;
+      height: auto;
       margin-bottom: 20px;
       opacity: 0;
       transform: translateX(-50px);
@@ -66,9 +66,8 @@
 <body>   
   <div class="loader-container">
     <div class="logo">
-        <img src="img/scan.svg" alt="Scan4Swachhta Logo" style="width: 50px; height: 50px; margin-bottom: 10px;">
-        <div>Scan4Swachhta</div>
-      </div>
+      <img src="img/scan (2).png" alt="Scan4Swachhta Logo">
+    </div>
     <div class="spinner">
       <i class="bi bi-arrow-repeat"></i>
     </div>
@@ -79,6 +78,9 @@
     setTimeout(() => {
       window.location.href = "index.html";
     }, 4000);
+    opacity = self.driver.execute_script("return window.getComputedStyle(arguments[0]).opacity;", logo)
+    self.assertTrue(float(opacity) > 0)
+
   </script>
 </body>
 </html>

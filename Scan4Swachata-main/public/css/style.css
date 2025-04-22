@@ -12,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: linear-gradient(to right, #63e328, #13c810);
+  background: linear-gradient(to right, #5ed328, #13c810);
   color: white;
   position: sticky;
   top: 0;
@@ -176,3 +176,25 @@ footer {
   background-color: #f1f1f1;
   color: #555;
 }
+/* Light Theme (Default) is already applied via CSS) */
+
+/* Dark Theme Mode */
+.dark-theme {
+  background-color: #1f1f1f;
+  color: #eee;
+}
+
+.dark-theme .navbar,
+.dark-theme footer {
+  background-color: #2e2e2e;
+  color: #eee;
+}
+
+
+.dark-theme input,
+.dark-theme textarea {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+

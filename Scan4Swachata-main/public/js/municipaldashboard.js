@@ -47,4 +47,3 @@ function showSection(id) {
   window.onload = () => {
     showSection('overview');
   };
-  
