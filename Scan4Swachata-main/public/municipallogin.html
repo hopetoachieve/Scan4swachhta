@@ -37,10 +37,17 @@
        
         New authority? <a href="municipalregister.html">Request access</a>
       </div>
+
+      <div class="home-link">
+        <a href="index.html" onclick="goHome()">Go to Home</a>
+      </div>
     </form>
   </div>
 
   <script>
+     function goHome() {
+    window.location.href = 'index.html';
+    }
     async function municipalLogin(event) {
   event.preventDefault();
   

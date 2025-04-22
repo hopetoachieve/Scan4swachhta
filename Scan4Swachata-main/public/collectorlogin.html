@@ -31,10 +31,23 @@
       </div>
       
       <button type="submit" class="submit-btn">Login</button>
+
+      <div class="login-options">
+        Don't have an account? <a href="collectorregister.html">Register now</a>
+      </div>
+
+      <div class="home-btn-container">
+        <button type="button" class="home-btn" onclick="goHome()">Go to Home Page</button>
+      </div>
     </form>
   </div>
 
   <script>
+    function goHome() {
+    window.location.href = 'index.html';
+    }
+
+
     async function collectorLogin(event) {
       event.preventDefault();
 

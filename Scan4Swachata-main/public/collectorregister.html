@@ -43,10 +43,17 @@
     <p class="login-redirect">
       Already registered? <a href="collectorlogin.html">Sign in here</a>
     </p>
+    <div class="home-link">
+      <a href="index.html" onclick="goHome()">Go to Home</a>
+    </div>
   </div>
+ 
   </div>
 
   <script>
+     function goHome() {
+    window.location.href = 'index.html';
+    }
     async function registerCollector(event) {
       event.preventDefault();
 
@@ -56,13 +63,14 @@
       const assignedArea = document.getElementById('assignedArea').value;
 
       try {
-        const res = await fetch('/register', {
+        const res = await fetch('/api/collector/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ collectorId, password, name, assignedArea })
         });
 
         const data = await res.json();
+        console.log('Response from server:', data); 
 
         if (res.ok) {
           alert('Registration successful!');

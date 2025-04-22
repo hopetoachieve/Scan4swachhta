@@ -35,11 +35,24 @@
       <div class="login-options">
         Don't have an account? <a href="citizenregister.html">Register now</a>
       </div>
+      <div class="home-btn-container">
+        <button type="button" class="home-btn" onclick="goHome()">Go to Home Page</button>
+      </div>
     </form>
   </div>
 
  
-  <script>
+
+  <script >
+     function goHome() {
+    window.location.href = 'index.html';
+    }
+          // In citizenregister.js or a <script> tag on login page
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        history.go(1); // Prevents back nav
+      };
+
     async function citizenLogin(event) {
       event.preventDefault();
       
@@ -73,7 +86,9 @@
         console.error(err);
       }
     }
+    
   </script>
   
 </body>
 </html>
+

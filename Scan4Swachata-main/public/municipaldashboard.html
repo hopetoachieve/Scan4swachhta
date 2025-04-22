@@ -6,7 +6,7 @@
   <title>Municipal Authority Dashboard - Scan4Swachhta</title>
   <link rel="stylesheet" href="css/municipaldashboard.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="D:\Scan4Swachata-main\Scan4Swachata-main\S4S\Scan4swachhta\Scan4Swachata-main\backend\qrcode.min.js"></script>
+ 
 </head>
 <body>
   <header class="dashboard-header">
@@ -19,12 +19,9 @@
 
   <nav class="dashboard-nav">
     <button onclick="showSection('overview')">Dashboard</button>
-    <button onclick="showSection('bins')">QR Bin Management</button>
-    <button onclick="showSection('logs')">Scan Logs</button>
-    <button onclick="showSection('gamification')">Gamification</button>
-    <button onclick="showSection('reports')">Reports</button>
-    <button onclick="showSection('notify')">Notifications</button>
-    <button onclick="showSection('settings')">Settings</button>
+    <button onclick="showSection('userManagement')">User Management</button>
+    
+    
   </nav>
 
   <main class="dashboard-container">
@@ -33,60 +30,41 @@
     <section id="overview" class="section">
       <h2>Dashboard Overview</h2>
       <div class="widgets">
-        <div class="widget-box">Total Bins Registered: 120</div>
-        <div class="widget-box">Scans Today: 58</div>
-        <div class="widget-box">Bins Needing Cleaning: 7</div>
-        <div class="widget-box">Top User: Asha123</div>
+        <div class="widget-box">
+          <strong>Total Waste Today:</strong> 120 kg
+        </div>
+        <div class="widget-box">
+          <strong>Scans Today:</strong> 58
+        </div>
+        <div class="widget-box">
+          <strong>Top User:</strong> Asha123
+        </div>
       </div>
-      <div class="charts">
-        <canvas id="scanChart" width="400" height="200"></canvas>
-      </div>
+      <h3>Heavy Contributors (In the Last 7 Days)</h3>
+          <ul id="heavyContributorsList">
+            
+          </ul>
+      <canvas id="scanChart" ></canvas>
+
     </section>
         
 
-    <!-- QR Bin Management -->
-    <section id="bins" class="section hidden">
-      <h2>QR Bin Management</h2>
-      <h2>Manage QR Bins</h2>
-           <p>You can search, add, edit, or delete smart bins from the city network.</p>
-       <ul>
-        <li>🔍 Filter bins by area, status, and type</li>
-          <li>📍 Add a bin with QR & location</li>
-         <li>🗺️ View bin locations on interactive map</li>
-           </ul>
-           <button>Add New Bin</button>
-
+   
+    <section id="userManagement" class="section hidden">
+      <h2>User Management</h2>
+    
+      <div class="delete-forms">
+        <h3>Delete Citizen</h3>
+        <input type="email" id="citizenEmailInput" placeholder="Enter citizen email" />
+        <button onclick="deleteCitizen()">Delete Citizen</button>
+      
+        <h3>Delete Collector</h3>
+        <input type="text" id="collectorIdInput" placeholder="Enter collector ID" />
+        <button onclick="deleteCollector()">Delete Collector</button>
+      </div>
     </section>
 
-    <!-- Scan Activity Logs -->
-    <section id="logs" class="section hidden">
-      <h2>Scan Logs</h2>
-      <p>[Filterable scan table with export functionality]</p>
-    </section>
-
-    <!-- Gamification -->
-    <section id="gamification" class="section hidden">
-      <h2>Gamification Management</h2>
-      <p>[Point rules, reward configuration, challenges]</p>
-    </section>
-
-    <!-- Reports & Analytics -->
-    <section id="reports" class="section hidden">
-      <h2>Reports & Analytics</h2>
-      <p>[Generate and download PDF/CSV reports]</p>
-    </section>
-
-    <!-- Notifications -->
-    <section id="notify" class="section hidden">
-      <h2>Send Notification</h2>
-      <p>[Compose + schedule announcements]</p>
-    </section>
-
-    <!-- Settings -->
-    <section id="settings" class="section hidden">
-      <h2>Settings</h2>
-      <p>[Theme, Wards, API integrations, etc.]</p>
-    </section>
+   
 
   </main>
 

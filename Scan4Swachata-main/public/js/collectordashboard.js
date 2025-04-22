@@ -1,3 +1,70 @@
+let html5QrCode;
+
+function startScanner() {
+  const qrRegionId = "qrcode-reader";
+  const qrRegion = document.getElementById(qrRegionId);
+
+  if (html5QrCode) {
+    html5QrCode.clear().catch(err => console.error("Clear error:", err));
+  }
+
+  html5QrCode = new Html5Qrcode(qrRegionId);
+
+  const config = { fps: 10, qrbox: 250 };
+
+  html5QrCode.start(
+    { facingMode: "environment" },
+    config,
+    (decodedText, decodedResult) => {
+      console.log("QR Code Scanned:", decodedText);
+
+      const name = decodedText.replace("User: ", "").trim();
+      document.getElementById("citizenName").value = name;
+      document.getElementById("scannedName").textContent = name; // <-- This line!
+
+      alert("Scanned user: " + name);
+
+      html5QrCode.stop().then(() => {
+        console.log("Scanner stopped");
+      }).catch((err) => console.error("Stop failed", err));
+    },
+    (errorMessage) => {
+      // optionally log errors
+    }
+  ).catch((err) => {
+    console.error("Start failed", err);
+  });
+}
+
+
+document.getElementById('qrScanForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById('citizenName').value.trim();
+  const weight = parseFloat(document.getElementById('weight').value);
+  const rating = parseInt(document.getElementById('rating').value);
+  const collectorId = localStorage.getItem('collectorId');
+
+  try {
+    const res = await fetch('/api/collector/manual-entry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, weight, rating, collectorId })
+    });
+
+    const data = await res.json();
+    alert(data.message || 'Entry submitted!');
+
+    document.getElementById('qrScanForm').reset();
+    document.getElementById('scannedName').textContent = 'None';
+  } catch (err) {
+    console.error('Submission error:', err);
+    alert('Something went wrong!');
+  }
+});
+
+
+
 function showSection(sectionId) {
     // Hide all sections
     document.querySelectorAll('.section').forEach(section => {
@@ -74,6 +141,8 @@ function showSection(sectionId) {
       document.getElementById('welcome').textContent = `Welcome, Collector ${collectorId}`;
       loadDashboardData();
     }
+    document.getElementById("startScannerBtn").addEventListener("click", startScanner);
+
   });
   
   document.getElementById('manualEntryForm').addEventListener('submit', async function (e) {
@@ -101,9 +170,26 @@ function showSection(sectionId) {
     }
   });
   
+  window.onload = async function () {// Push a new state to history so there's something to go "back" to
+    history.pushState(null, null, location.href);
+    
+    // Now listen for back/forward navigation
+    window.addEventListener('popstate', function (event) {
+      // Push user back forward again
+      history.pushState(null, null, location.href);
+    
+      // Show SweetAlert popup
+      Swal.fire({
+        icon: 'warning',
+        title: 'Logout First!',
+        text: 'You need to log out before leaving the dashboard.',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: '#3085d6'
+      });
+    });
+  };
 
 
- 
 
   
   

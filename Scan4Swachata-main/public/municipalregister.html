@@ -54,14 +54,34 @@
       </div>
 
       <button type="submit" class="submit-btn">Request Access</button>
+      <div class="login-options">
+        Already have access? <a href="municipallogin.html">Login here</a>
+      </div>
+      <div class="home-link">
+        <a href="index.html" onclick="goHome()">Go to Home</a>
+      </div>
     </form>
     
-    <div class="login-options">
-      Already have access? <a href="municipallogin.html">Login here</a>
-    </div>
+   
+    
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Hold up!',
+        text: 'Please logout first before leaving this page.',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: '#3085d6'
+      });
+      history.go(1); // Block going back
+    };
+  </script>
   <script>
+    function goHome() {
+      window.location.href = 'index.html';
+    }
     async function registerMunicipal(event) {
       event.preventDefault();
       
