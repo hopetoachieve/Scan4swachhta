@@ -63,13 +63,14 @@
       const assignedArea = document.getElementById('assignedArea').value;
 
       try {
-        const res = await fetch('/register', {
+        const res = await fetch('/api/collector/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ collectorId, password, name, assignedArea })
         });
 
         const data = await res.json();
+        console.log('Response from server:', data); 
 
         if (res.ok) {
           alert('Registration successful!');
